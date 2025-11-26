@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; padding: 20px;">
+    <div style="width: 100%; max-width: 420px;">
+        <form method="post" id="admin-login-form" onsubmit="return prepareToken()">
+            <h2 style="text-align: center; color: var(--dark); margin-bottom: 8px; font-size: 28px;">Admin Access</h2>
+            <p style="text-align: center; color: var(--gray); margin-bottom: 32px; font-size: 14px;">Enter your admin token to access the dashboard</p>
+            
+            <label style="display: block; font-weight: 600; color: var(--dark); margin-bottom: 8px;">Admin Token</label>
+            <input type="text" id="token_visible" placeholder="@7900012929 or 7900012929" required autofocus 
+                   style="width: 100%; padding: 14px; margin-bottom: 24px; border: 2px solid var(--light); border-radius: 8px; font-size: 16px; transition: all 0.3s ease;" />
+            <input type="hidden" id="token_hidden" name="token" />
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 16px;">
+                Sign In
+            </button>
+        </form>
+        
+        <p style="text-align: center; color: var(--gray); margin-top: 20px; font-size: 13px;">
+            Default token: <code style="background: var(--light); padding: 2px 6px; border-radius: 3px;">@7900012929</code>
+        </p>
+    </div>
+</div>
+
+<script>
+function prepareToken(){
+    try{
+        var v = document.getElementById('token_visible').value.trim();
+        if(!v) return false;
+        if(/^[0-9]+$/.test(v)){
+            v = '@' + v;
+        }
+        document.getElementById('token_hidden').value = v;
+        return true;
+    }catch(e){
+        return true;
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main>
+  <div class="grid">
+    {% for p in products %}
+      <div class="card">
+        <div class="image-carousel">
+          {% if p.images_list and p.images_list|length > 0 %}
+            <img src="/static/{{ p.images_list[0] }}" alt="{{ p.title }}" class="main-image" onerror="this.src='/static/placeholder.png'"/>
+            {% if p.images_list|length > 1 %}
+              <span class="image-count">+{{ p.images_list|length - 1 }} photos</span>
+            {% endif %}
+          {% else %}
+            <img src="/static/placeholder.png" alt="product image" class="main-image"/>
+          {% endif %}
+        </div>
+        <div class="card-content">
+          <h3>{{ p.title }}</h3>
+          <p class="card-description">{{ p.description[:80] if p.description else 'Premium quality product' }}...</p>
+          <p class="card-price">₹{{ p.price }}</p>
+          {% if p.seller_name %}
+            <p class="card-seller">{{ p.seller_name }} • ⭐ {{ p.seller_rating if p.seller_rating else '4.5' }}</p>
+          {% endif %}
+          <a href="/product/{{ p.id }}" class="btn btn-primary" style="margin-top: auto; width: 100%; text-align: center;">View Details</a>
+        </div>
+      </div>
+    {% else %}
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+        <h2 style="color: var(--dark); margin-bottom: 10px;">No Products Yet</h2>
+        <p style="color: var(--gray); font-size: 16px;">Admin can upload products from the top-right menu</p>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}
